@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIGN UP</title>
+    <style>
+
+       * {
+        margin:0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+       body{
+        
+        font-family:Arial,sans-serif;
+      /*background: linear-gradient(to bottom right, #833ab4, #fd1d1d, #fcb045);*/
+        display: flex;
+        height:650px;
+        justify-content:center ;
+        color: #fff;
+       align-items: center;
+
+       }
+      
+       .container {
+        border-radius: 25px;
+        border: 5px solid red;
+        box-shadow: 5px 10px 20px;
+        width: 400px;
+        text-align: center;
+        padding: 20px;
+        background-color: #fff;
+    color: #333;
+        
+        }
+       .container h1 {
+        font-size: 1.7rem;
+        margin-bottom: 10px;
+       color: #833ab4;
+    }
+    .form_group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    
+       
+       label{
+        color: black;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+        font-weight: bold;
+       }
+
+       input{
+        width: 80%;
+        width: 100%;
+        padding: 10px;
+        font-size: 0.9rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        transition: border-color 0.3s ease;
+       }
+        input:focus {
+        border-color: #833ab4;
+        outline-style: double;
+       } 
+
+   
+    button {
+        background-color: #833ab4;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #fd1d1d;
+    }
+    button:active {
+        background-color: #fcb045;
+    }
+    .container div:last-child {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-evenly;
+       
+    }
+    
+    .link a{
+        text-decoration: none;
+    }
+    
+    </style>
+</head>
+<body>
+<div>
+    <div class="container">
+        <h1>INSTAGRAM SIGNUP</h1>
+        <form>
+        <div class="form_group">
+            <label for="name">NAME</label>
+            <input type="text" id="name" name="name" placeholder="Enter Your Name Here">
+        </div>
+        <div class="form_group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter Your Username Here">
+        </div>
+        <div class="form_group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Enter Your Email Here">
+        </div>
+        <div class="form_group">
+            <label for="pass">Password</label>
+            <input type="password" id="pass" name="pass" placeholder="Enter Your password">
+        </div>
+        <div class="form_group">
+            <label for="cnfpass">Confirm Password</label>
+            <input type="password" id="cnfpass" name="cnfpass" placeholder="Enter Your Password Again">
+        </div>
+        <div class="form_group">
+            <label for="bio">Bio</label>
+            <input type="text" id="bio" name="bio" placeholder="Enter Your Bio">
+        </div>
+        <div >
+         <button id="submit" type="submit" >Sign Up</button>
+        </div>
+        <div class="link">
+        <a class="links" href="http://">Forgot Password</a>
+        <a class="links" href="./signin.html">Sign In</a>
+        </div>
+        
+        
+        
+        </form>
+    </div>
+    
+</div>
+    
+</body>
+    <script>
+        let button = document.getElementById("submit");
+        button.addEventListener("click", (event) => {
+            event.preventDefault(); // Prevent default form submission
+    
+            let username = document.getElementById("username").value;
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("pass").value;
+            let bio = document.getElementById("bio").value;
+            let Confirmpass = document.getElementById("cnfpass").value;
+    
+            if (!username || !email || !name || !password || !Confirmpass || !bio) {
+                alert("All fields must be filled");
+                return;
+            }
+    
+            let payload = {
+                name: name,
+                username: username,
+                email: email,
+                bio: bio,
+                password: password,
+                confirmpassword: Confirmpass
+            };
+    
+            signup(payload);
+        });
+    
+        async function signup(payload) {
+            try {
+                let res = await fetch("http://127.0.0.1:3000/api/auth/signup", {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+    
+                let data = await res.json(); // Corrected JSON method
+                console.log(data);
+                window.location.href = "http://127.0.0.1:5501/frontend/signin.html";
+            } catch (err) {
+                console.log(`Error Message: ${err}`);
+            }
+        }
+    </script>
+    
+
+</html>

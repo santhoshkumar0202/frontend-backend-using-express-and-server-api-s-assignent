@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign IN</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+            
+            
+        }
+
+        .container{
+            border: 5px solid red;
+            width: 400px;
+            padding: 22px;
+            text-align: center;
+            box-shadow: 5px 10px 20px;
+            margin: 100px;
+            border-radius: 40px;
+            background-color: #fff;
+            color: #333;
+        }
+        .container h1{
+            color: #833ab4;
+          font-size: 1.6rem;
+          margin-bottom: 25px;
+        }
+
+        label{
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form_group{
+            text-align:left;
+            margin-bottom: 10px;
+        }
+        input{
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid #ccc;
+            transition:border-color 10s ease;
+            
+        }
+        input:focus{
+            border-color:#833ab4;
+            outline: double;
+            background-color: rgb(187, 234, 248)
+            }
+
+     button{
+                background-color: #833ab4;
+        color: #fff;
+        border: none;
+        font-size: 1rem;
+        padding: 9px 14px;  
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.5s ease-in-out;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+        
+      }
+     #btn:hover{
+        background-color: #eeb300;
+      }
+      .container div:last-child {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-evenly;
+       
+    }
+   .links a{
+        text-decoration: none;
+    }
+    .links{
+        margin:0px 30px;
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>INSTAGRAM SIGIN</h1>
+        <form action="">
+        <div class="form_group">
+            <label for="username">Username</label>
+            <input type="text " name="Username" id="username" placeholder="Enter Your MailId">
+
+        </div>
+        <div class="form_group">
+            <label for="pass">Password</label>
+            <input type="password" name="password" id="pass" placeholder="Enter your Password">
+        </div>
+        <div> <button id="btn" type="button ">Sign In</button></div>
+        <div class="links">
+            <a href="">Forgot Password?</a>
+            <a href="./signup.html">Sign UP</a>
+        </div>
+
+        </form>
+    </div>
+    
+
+
+    
+</body>
+<script>
+    let loginbtn=document.getElementById("btn")
+    loginbtn.addEventListener("click",()=>{
+        event.preventDefault();
+        let username1=document.getElementById("username").value;
+        let password1=document.getElementById("pass").value;
+
+        if(!username1||!password1){
+            alert("please check your credentials")
+            return ;
+        }
+       
+let payload={
+    username:username1,
+    password:password1
+}
+ console.log(payload)
+        signin(payload)
+    })
+
+
+    async function signin(payload){
+          try{
+let res= await fetch("http://127.0.0.1:3000/api/auth/signin",{
+    method:"POST",
+    credentials:"include",
+    redirect:"follow",
+    headers:{"content-type":"application/json"},
+    body:JSON.stringify(payload)
+
+})
+
+let data= await res.json();
+console.log(data);
+window.location.href="http://127.0.0.1:5501/frontend/loggedin.html";
+
+          }catch(e){
+            console.log(e.message)
+          }
+    }
+
+
+
+</script>
+
+
+</html>
